@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Feedback Coach - Faculty Training</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app" class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1>Medical Feedback Coach</h1>
+                <p class="subtitle">Faculty Development Program</p>
+            </div>
+            <div class="header-info">
+                <span id="session-round" class="session-indicator">Round 1 of 3</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Welcome Screen -->
+            <section id="welcome-screen" class="screen screen-active">
+                <div class="welcome-content">
+                    <div class="welcome-icon">👋</div>
+                    <h2>Welcome to Your First Day</h2>
+                    <p class="welcome-text">
+                        You've been assigned to work with a medical student who has been showing signs of struggle in both clinical performance and professional behavior.
+                    </p>
+                    <p class="welcome-text">
+                        Over the next few interactions, you'll have the opportunity to practice delivering effective feedback using evidence-based techniques. An AI coach will provide guidance based on feedback best practices.
+                    </p>
+                    <button class="btn btn-primary" onclick="showStudentProfile()">
+                        Meet Your Student
+                    </button>
+                </div>
+            </section>
+
+            <!-- Student Profile Screen -->
+            <section id="profile-screen" class="screen">
+                <div class="profile-content">
+                    <div class="profile-header">
+                        <div class="student-avatar">📋</div>
+                        <div class="student-info">
+                            <h2 id="student-name">Alex Chen - PGY1 Resident</h2>
+                            <p id="student-rotation">Rotation: Internal Medicine - Week 4 of 12</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3>Key Observations</h3>
+                        <ul id="observations-list" class="observations-list">
+                            <li>Inconsistent adherence to professional dress code</li>
+                            <li>Frequent tardiness to patient care activities</li>
+                            <li>Defensive responses when given constructive criticism</li>
+                            <li>Limited engagement with team members</li>
+                            <li>Documentation is often incomplete or inaccurate</li>
+                            <li>Struggles to ask for help appropriately</li>
+                        </ul>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3>Context for This Conversation</h3>
+                        <p id="context-text">
+                            The student was 20 minutes late to morning rounds again today and was not in professional attire. During case presentations, they seemed unprepared and didn't engage with team discussion. When you asked about their progress on patient documentation, they became defensive rather than receptive.
+                        </p>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="showFeedbackScreen()">
+                        Begin Feedback Practice
+                    </button>
+                </div>
+            </section>
+
+            <!-- Feedback Practice Screen -->
+            <section id="feedback-screen" class="screen">
+                <div class="feedback-practice">
+                    <!-- Left Panel: Student Response Area -->
+                    <div class="feedback-left-panel">
+                        <div class="student-response-area">
+                            <div class="response-header">
+                                <div class="student-avatar-small">📋</div>
+                                <h3>Student (Alex)</h3>
+                            </div>
+                            <div id="student-message-display" class="message-display">
+                                <p class="initial-message">Waiting for your feedback...</p>
+                            </div>
+                        </div>
+
+                        <!-- Interaction History -->
+                        <div class="interaction-history">
+                            <h4>Conversation Flow</h4>
+                            <div id="history-log" class="history-log">
+                                <div class="history-item history-system">
+                                    <span class="history-label">Start:</span> You're meeting with the student to discuss today's performance.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel: Faculty Input Area -->
+                    <div class="feedback-right-panel">
+                        <div class="faculty-input-section">
+                            <label for="feedback-input" class="input-label">Your Feedback:</label>
+                            <textarea 
+                                id="feedback-input" 
+                                class="feedback-textarea" 
+                                placeholder="Type what you would say to the student. Be specific, constructive, and professional..."
+                                rows="8"
+                            ></textarea>
+                            <div class="input-actions">
+                                <button class="btn btn-primary" onclick="submitFeedback()">
+                                    Give Feedback
+                                </button>
+                                <button class="btn btn-secondary" onclick="showCoachTip()">
+                                    💡 Get Coach Tip
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Coach Tip Panel -->
+                        <div id="coach-tip-panel" class="coach-tip-panel hidden">
+                            <div class="coach-header">
+                                <span class="coach-icon">🎯</span>
+                                <h4>Coach Guidance</h4>
+                                <button class="close-btn" onclick="closeCoachTip()">×</button>
+                            </div>
+                            <div id="coach-content" class="coach-content">
+                                <p>Loading coach guidance...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Coach Analysis Screen -->
+            <section id="analysis-screen" class="screen">
+                <div class="analysis-content">
+                    <div class="analysis-header">
+                        <h2>Coach Analysis & Student Response</h2>
+                    </div>
+
+                    <!-- Your Feedback Review -->
+                    <div class="analysis-section">
+                        <h3>Your Feedback</h3>
+                        <div class="feedback-review-box">
+                            <p id="feedback-review-text"></p>
+                        </div>
+                    </div>
+
+                    <!-- Coach Feedback -->
+                    <div class="analysis-section">
+                        <div class="coach-analysis-box">
+                            <div class="coach-header-inline">
+                                <span class="coach-icon">🎯</span>
+                                <h3>Coach Analysis</h3>
+                            </div>
+                            <div id="coach-analysis-text" class="coach-analysis-text">
+                                <p>Loading analysis...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Student Response -->
+                    <div class="analysis-section">
+                        <h3>Student's Response</h3>
+                        <div class="student-response-box">
+                            <p id="student-response-text"></p>
+                        </div>
+                    </div>
+
+                    <!-- Progress Tracking -->
+                    <div class="analysis-section">
+                        <h3>Student Progress</h3>
+                        <div class="progress-tracking">
+                            <div class="progress-item">
+                                <label>Professionalism & Dress Code</label>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progress-professionalism" style="width: 20%"></div>
+                                </div>
+                                <span class="progress-text" id="progress-professionalism-text">20%</span>
+                            </div>
+                            <div class="progress-item">
+                                <label>Punctuality & Presence</label>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progress-punctuality" style="width: 30%"></div>
+                                </div>
+                                <span class="progress-text" id="progress-punctuality-text">30%</span>
+                            </div>
+                            <div class="progress-item">
+                                <label>Engagement & Receptiveness</label>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progress-engagement" style="width: 25%"></div>
+                                </div>
+                                <span class="progress-text" id="progress-engagement-text">25%</span>
+                            </div>
+                            <div class="progress-item">
+                                <label>Documentation Quality</label>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progress-documentation" style="width: 20%"></div>
+                                </div>
+                                <span class="progress-text" id="progress-documentation-text">20%</span>
+                            </div>
+                            <div class="progress-item">
+                                <label>Team Collaboration</label>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progress-collaboration" style="width: 25%"></div>
+                                </div>
+                                <span class="progress-text" id="progress-collaboration-text">25%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Remaining Issues -->
+                    <div class="analysis-section">
+                        <h3>Areas for Further Growth</h3>
+                        <div id="remaining-issues" class="remaining-issues">
+                            <ul>
+                                <li>Defensive reactions to feedback</li>
+                                <li>Limited progress on documentation</li>
+                                <li>Inconsistent professionalism</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="analysis-actions">
+                        <button class="btn btn-primary" onclick="startNextRound()">
+                            Continue to Next Round
+                        </button>
+                        <button class="btn btn-secondary" onclick="reviewCoachTips()">
+                            📚 Review Feedback Best Practices
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Best Practices Screen -->
+            <section id="practices-screen" class="screen">
+                <div class="practices-content">
+                    <h2>Feedback Best Practices</h2>
+                    <div class="practices-grid">
+                        <div class="practice-card">
+                            <h3>🎯 Be Specific</h3>
+                            <p>
+                                Use concrete examples and behaviors rather than generalizations. 
+                                Say "I noticed you were 20 minutes late" not "You're always late."
+                            </p>
+                        </div>
+                        <div class="practice-card">
+                            <h3>👂 Listen First</h3>
+                            <p>
+                                Ask open-ended questions to understand the student's perspective. 
+                                This builds rapport and shows you value their input.
+                            </p>
+                        </div>
+                        <div class="practice-card">
+                            <h3>🤝 Use I-Statements</h3>
+                            <p>
+                                Frame feedback from your perspective: "I've observed..." or "I'm concerned about..." 
+                                rather than accusatory language.
+                            </p>
+                        </div>
+                        <div class="practice-card">
+                            <h3>🎁 Balance with Strengths</h3>
+                            <p>
+                                Acknowledge what the student does well before diving into challenges. 
+                                This creates psychological safety.
+                            </p>
+                        </div>
+                        <div class="practice-card">
+                            <h3>🚀 Focus on Growth</h3>
+                            <p>
+                                Frame feedback as an opportunity for development. 
+                                Offer support and resources to help the student improve.
+                            </p>
+                        </div>
+                        <div class="practice-card">
+                            <h3>✅ Collaboratively Plan</h3>
+                            <p>
+                                Work together to identify concrete next steps and follow-up points. 
+                                Share ownership of the improvement plan.
+                            </p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="returnToAnalysis()">
+                        Back to Session
+                    </button>
+                </div>
+            </section>
+
+            <!-- Completion Screen -->
+            <section id="completion-screen" class="screen">
+                <div class="completion-content">
+                    <div class="completion-icon">🎉</div>
+                    <h2>Training Session Complete</h2>
+                    <p class="completion-message">
+                        Great work! You've completed three rounds of feedback practice. 
+                        The feedback techniques you've practiced are grounded in educational psychology 
+                        and evidence-based approaches to faculty development.
+                    </p>
+                    
+                    <div class="completion-summary">
+                        <h3>Key Takeaways</h3>
+                        <ul>
+                            <li>Effective feedback is specific, timely, and balanced</li>
+                            <li>Listening and understanding the student's perspective is crucial</li>
+                            <li>Frame challenges as growth opportunities, not criticisms</li>
+                            <li>Collaborate on solutions and follow-up plans</li>
+                            <li>Consistent, supportive feedback promotes professional development</li>
+                        </ul>
+                    </div>
+
+                    <div class="completion-actions">
+                        <button class="btn btn-primary" onclick="resetApp()">
+                            Start New Session
+                        </button>
+                        <button class="btn btn-secondary" onclick="downloadCertificate()">
+                            📄 Download Resources
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Medical Feedback Coach © 2024 | Evidence-based faculty development</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
