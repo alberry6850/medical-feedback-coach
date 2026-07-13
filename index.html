@@ -30,7 +30,7 @@
                         You've been assigned to work with a medical student who has been showing signs of struggle in both clinical performance and professional behavior.
                     </p>
                     <p class="welcome-text">
-                        Over the next few interactions, you'll have the opportunity to practice delivering effective feedback using evidence-based techniques. An AI coach will provide guidance based on feedback best practices.
+                        Over the next few interactions, you'll have the opportunity to practice delivering effective feedback using evidence-based techniques. An AI coach will provide guidance based on your selections.
                     </p>
                     <button class="btn btn-primary" onclick="showStudentProfile()">
                         Meet Your Student
@@ -42,7 +42,9 @@
             <section id="profile-screen" class="screen">
                 <div class="profile-content">
                     <div class="profile-header">
-                        <div class="student-avatar">📋</div>
+                        <div class="student-avatar">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop" alt="Student">
+                        </div>
                         <div class="student-info">
                             <h2 id="student-name">Alex Chen - PGY1 Resident</h2>
                             <p id="student-rotation">Rotation: Internal Medicine - Week 4 of 12</p>
@@ -64,7 +66,7 @@
                     <div class="profile-section">
                         <h3>Context for This Conversation</h3>
                         <p id="context-text">
-                            The student was 20 minutes late to morning rounds again today and was not in professional attire. During case presentations, they seemed unprepared and didn't engage with team discussion. When you asked about their progress on patient documentation, they became defensive rather than receptive.
+                            The student was 20 minutes late to morning rounds again today and was not in professional attire. During case presentations, they seemed unprepared and didn't engage with the team as expected.
                         </p>
                     </div>
 
@@ -77,12 +79,23 @@
             <!-- Feedback Practice Screen -->
             <section id="feedback-screen" class="screen">
                 <div class="feedback-practice">
-                    <!-- Left Panel: Student Response Area -->
+                    <!-- Left Panel: Scenario and Student Response -->
                     <div class="feedback-left-panel">
+                        <!-- Student Scenario -->
+                        <div class="scenario-box">
+                            <h4>📋 Scenario Context</h4>
+                            <p id="scenario-text">
+                                You're meeting with Alex after rounds today. They seem tense but willing to listen. You have a critical feedback opportunity regarding their professionalism, punctuality, and engagement with the team.
+                            </p>
+                        </div>
+
+                        <!-- Student Response Area -->
                         <div class="student-response-area">
                             <div class="response-header">
-                                <div class="student-avatar-small">📋</div>
-                                <h3>Student (Alex)</h3>
+                                <div class="student-avatar-small">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="Alex">
+                                </div>
+                                <h3>Alex's Response</h3>
                             </div>
                             <div id="student-message-display" class="message-display">
                                 <p class="initial-message">Waiting for your feedback...</p>
@@ -100,20 +113,12 @@
                         </div>
                     </div>
 
-                    <!-- Right Panel: Faculty Input Area -->
+                    <!-- Right Panel: Faculty Feedback Selection -->
                     <div class="feedback-right-panel">
-                        <div class="faculty-input-section">
-                            <label for="feedback-input" class="input-label">Your Feedback:</label>
-                            <textarea 
-                                id="feedback-input" 
-                                class="feedback-textarea" 
-                                placeholder="Type what you would say to the student. Be specific, constructive, and professional..."
-                                rows="8"
-                            ></textarea>
+                        <div class="feedback-options-section">
+                            <label class="options-label">Select the feedback approach that best aligns with best practices:</label>
+                            <div class="feedback-options" id="feedback-options"></div>
                             <div class="input-actions">
-                                <button class="btn btn-primary" onclick="submitFeedback()">
-                                    Give Feedback
-                                </button>
                                 <button class="btn btn-secondary" onclick="showCoachTip()">
                                     💡 Get Coach Tip
                                 </button>
@@ -131,6 +136,11 @@
                                 <p>Loading coach guidance...</p>
                             </div>
                         </div>
+
+                        <!-- Feedback Response -->
+                        <div id="feedback-response-panel" class="feedback-response-box hidden">
+                            <div id="response-content"></div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -142,15 +152,15 @@
                         <h2>Coach Analysis & Student Response</h2>
                     </div>
 
-                    <!-- Your Feedback Review -->
+                    <!-- Your Selection Review -->
                     <div class="analysis-section">
-                        <h3>Your Feedback</h3>
+                        <h3>Your Feedback Selection</h3>
                         <div class="feedback-review-box">
                             <p id="feedback-review-text"></p>
                         </div>
                     </div>
 
-                    <!-- Coach Feedback -->
+                    <!-- Coach Analysis -->
                     <div class="analysis-section">
                         <div class="coach-analysis-box">
                             <div class="coach-header-inline">
@@ -285,7 +295,7 @@
                             </p>
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="returnToAnalysis()">
+                    <button class="btn btn-primary" onclick="returnToAnalysis()" style="display: block; margin: 2rem auto;">
                         Back to Session
                     </button>
                 </div>
